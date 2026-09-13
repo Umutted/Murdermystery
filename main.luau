@@ -1,4 +1,3 @@
-print("script ready")
 local replicated = game:GetService("ReplicatedStorage")
 
 local remotesfolder = replicated:FindFirstChild("Remotes")
@@ -46,7 +45,7 @@ local UICorner_3 = Instance.new("UICorner")
 hxk.Name = "hxk"
 hxk.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 hxk.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
+hxk.ResetOnSpawn = false
 Murderer.Name = "Murderer"
 Murderer.Parent = hxk
 Murderer.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
@@ -199,11 +198,25 @@ faderemote.OnClientEvent:Connect(function(data)
 		
 	end
 	
-	while currentMurderer ~= "" do
-		local distance = (game.Workspace:FindFirstChild(currentMurderer).HumanoidRootPart.Position - game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name.HumanoidRootPart.Position).Magnitude())
-		Distance.Text = math.floor(distance)
-		wait(0.5)
-	end
+	task.spawn(function()
+		while true do
+			task.wait(0.5)
+
+			if currentMurderer ~= "" and currentMurderer ~= game.Players.LocalPlayer.Name then
+				local murdChar = game.Workspace:FindFirstChild(currentMurderer)
+				local myChar = game.Players.LocalPlayer.Character
+
+				if murdChar and myChar and murdChar:FindFirstChild("HumanoidRootPart") and myChar:FindFirstChild("HumanoidRootPart") then
+					-- Parantez dışarıda, Magnitude parantezsiz, Character üzerinden arama
+					local distance = (murdChar.HumanoidRootPart.Position - myChar.HumanoidRootPart.Position).Magnitude
+					Distance.Text = math.floor(distance) .. "M"
+					Distance.Visible = true
+				end
+			else
+				Distance.Visible = false
+			end
+		end
+	end)
 	
 	workspace.DescendantAdded:Connect(function(obj)
 		
