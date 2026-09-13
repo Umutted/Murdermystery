@@ -1,3 +1,4 @@
+print("script ready")
 local replicated = game:GetService("ReplicatedStorage")
 
 local remotesfolder = replicated:FindFirstChild("Remotes")
