@@ -154,7 +154,7 @@ UICorner.Parent = Role
 print("bb gui ready")
 
 faderemote.OnClientEvent:Connect(function(data)
-	
+
 	print("remote geldi")
 	local currentMurderer = ""
 	local currentSherrif = ""
@@ -165,12 +165,12 @@ faderemote.OnClientEvent:Connect(function(data)
 			local newgui = replicated:FindFirstChild("RoleGui"):Clone()
 			newgui.Parent = game.Workspace:FindFirstChild(name):FindFirstChild("Head")
 			newgui.Enabled = true
-			
+
 			local roletext = newgui:FindFirstChild("Role")
 			roletext.TextColor3 = Color3.fromRGB(255, 0, 4)
 			roletext.Text = "Murderer"
 		end
-		
+
 		if playerdata.Role == "Sheriff" then
 			local humanoid = game.Workspace:FindFirstChild(name):FindFirstChild("Humanoid")
 			currentSherrif = name
@@ -183,21 +183,21 @@ faderemote.OnClientEvent:Connect(function(data)
 			roletext.TextColor3 = Color3.fromRGB(0, 255, 213)
 			roletext.Text = "Sherrif"
 		end
-		
-		
+
+
 		if currentMurderer ~= "" and currentSherrif ~= "" then
 			break
 		end
-		
+
 		if currentMurderer ~= game.Players.LocalPlayer.Name then
 			Distance.Visible = true
-			
-			
-			
+
+
+
 		end
-		
+
 	end
-	
+
 	task.spawn(function()
 		while true do
 			task.wait(0.5)
@@ -217,31 +217,41 @@ faderemote.OnClientEvent:Connect(function(data)
 			end
 		end
 	end)
-	
+
 	workspace.DescendantAdded:Connect(function(obj)
-		
+
 		if obj.Name == "GunDrop" then
-			
+
 			Tpgun.Visible = true
 			Tpgun.MouseButton1Click:Connect(function()
 				local plr = game.Players.LocalPlayer
-				
+
 				plr.Character.HumanoidRootPart.CFrame = obj.CFrame
-				
+
 			end)
-			
+
 		end
-		
+
 	end)
 	
 	
+	workspace.DescendantRemoving:Connect(function(obj)
+		if obj.Name == "GunDrop" then
+
+			Tpgun.Visible = false
+
+		end
+		
+	end)
+
+
 	roundendfaderemote.OnClientEvent:Connect(function()
 		currentMurderer = ""
 		currentSherrif = ""
 		Tpgun.Visible = false
 		Distance.Visible = false
-		
+
 	end)
-	
-	
+
+
 end)
