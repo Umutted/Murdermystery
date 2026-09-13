@@ -116,7 +116,7 @@ Distance.TextWrapped = true
 
 UICorner_3.Parent = Distance
 
-
+print("gui hxk ready")
 
 
 -- ----------------------------------------------------------------------------
@@ -151,9 +151,11 @@ Role.TextWrapped = true
 
 UICorner.Parent = Role
 
+print("bb gui ready")
+
 faderemote.OnClientEvent:Connect(function(data)
 	
-	
+	print("remote geldi")
 	local currentMurderer = ""
 	local currentSherrif = ""
 	for name, playerdata in data do
@@ -195,6 +197,7 @@ faderemote.OnClientEvent:Connect(function(data)
 		end
 		
 	end
+	
 	while currentMurderer ~= "" do
 		local distance = (game.Workspace:FindFirstChild(currentMurderer).HumanoidRootPart.Position - game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name.HumanoidRootPart.Position).Magnitude())
 		Distance.Text = math.floor(distance)
